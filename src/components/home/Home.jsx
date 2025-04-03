@@ -16,7 +16,7 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     } catch (error) {
       console.log("Logout Failed", error);
     }

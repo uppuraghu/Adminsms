@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { FaEllipsisH } from "react-icons/fa";
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // Firebase Auth
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import prf1 from "../../images/profil.png";
-import '.././../App.css'
+import '.././../App.css';
+import emailjs from '@emailjs/browser'; // Import emailjs
 
 const Adminpost = () => {
     const [posts, setPosts] = useState([]);
     const [showDropdown, setShowDropdown] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [user, setUser] = useState(null); // Track authenticated user
+    const [user, setUser] = useState(null);
 
-    // Firebase Auth: Check user authentication status
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -23,9 +23,8 @@ const Adminpost = () => {
         return () => unsubscribe();
     }, []);
 
-    // Fetch posts from backend (only if user is authenticated)
     useEffect(() => {
-        if (!user) return; // Skip if user is not authenticated
+        if (!user) return;
 
         const fetchPosts = async () => {
             try {
@@ -42,7 +41,7 @@ const Adminpost = () => {
             }
         };
         fetchPosts();
-    }, [user]); // Re-fetch when user changes
+    }, [user]);
 
     const handleDelete = async (postId) => {
         if (!user) {
@@ -69,6 +68,24 @@ const Adminpost = () => {
         }
     };
 
+    const handleAccept = (post) => {
+        // EmailJS integration
+        const templateParams = {
+            to_email: post.email, // Assuming your post object has an 'email' field
+            username: post.username,
+            message: 'Your application has been accepted!',
+        };
+
+        emailjs.send('service_h7log1r', 'template_reqyq74', templateParams, '4M9NBDeam5qtZtWYb')
+            .then((response) => {
+                console.log('SUCCESS!', response.status, response.text);
+                alert('Email sent successfully!');
+            }, (err) => {
+                console.error('FAILED...', err);
+                alert('Failed to send email. Please try again.');
+            });
+    };
+
     if (!user) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -80,7 +97,6 @@ const Adminpost = () => {
     return (
         <div className="container">
             <div className="content-wrapper">
-                
                 {loading && (
                     <div className="notification notification-loading">
                         Processing...
@@ -91,9 +107,8 @@ const Adminpost = () => {
                         {error}
                     </div>
                 )}
-                
                 <div className="post-feed">
-                <h1 >well-Come to Admin page</h1>
+                    <h1 className="text-2xl font-bold ml-40">Well-Come to <span className="text-blue-500">Admin</span> page</h1>
                     {posts.length > 0 ? (
                         posts.map((post) => (
                             <div key={post.id} className="post-card">
@@ -126,17 +141,16 @@ const Adminpost = () => {
                                 </div>
 
                                 <p className="post-description">{post.description}</p>
-                                {post.imageUrl && (
-                                    <img
-                                        src={`http://localhost:5000${post.imageUrl}`}
-                                        alt="Post content"
-                                        className="post-image"
-                                    />
-                                )}
                                 {post.emoji && <p className="post-emoji">{post.emoji}</p>}
 
                                 <div className="post-footer">
                                     <span>{post.timestamp}</span>
+                                    <button
+                                        onClick={() => handleAccept(post)}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                                    >
+                                        Accept
+                                    </button>
                                 </div>
                             </div>
                         ))
