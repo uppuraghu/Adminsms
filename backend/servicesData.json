@@ -1,15 +1,5 @@
 [
-  {
-    "serviceType": "BankingService",
-    "name": "Pradyumna Kumar Naik",
-    "email": "pradyumna@gmail.com",
-    "phone": "91239782758",
-    "date": "2025-03-18",
-    "bank": "SBI",
-    "accountType": "current",
-    "address": "Punjagutta,Hyderabad,Telengana",
-    "uniqueID": "#sbi3630"
-  },
+  
   {
     "serviceType": "OtherServices",
     "requirement": "dyguia",

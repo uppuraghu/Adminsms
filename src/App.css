@@ -55,13 +55,13 @@
 .post-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
    
 }
 
 .profile-img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -111,10 +111,12 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
+   
 }
 
 .modal-content {
-    width: 600px;
+    width: 700px;
+    height: 400px;
     background-color: #fff;
     padding: 20px;
     border-radius: 12px;
@@ -140,25 +142,53 @@
     margin-bottom: 20px;
     font-size: 18px;
 }
-
+.text-display {
+    font-size: 25px; 
+    font-weight: 500;
+  }
+  
 /* Input Group */
 .modal-input-group {
     display: flex;
     align-items: center;
     gap: 10px;
+    padding: 10px;
 }
-
+.modal-input-group:hover{
+    background-color: #f6ecec;
+    width: 260px;
+    
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
 .text-input,
-.select-input,
+.select-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    font-size: 18px;
+}
 .textarea-input {
     width: 100%;
     padding: 10px;
     margin-top: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
+    font-size: 18px;
+  
+    border: none;           /* Removes border */
+    outline: none;          /* Removes outline on focus */
+    background: transparent; /* Optional: makes background clear */
+    resize: none;           /* Optional: disables resize */
+    box-shadow: none;       /* Removes any shadow that mimics a border */
+  }
+  .textarea-input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+    
 
 
 .file-input {
@@ -178,51 +208,89 @@
     border-radius: 8px;
 }
 
-.delete-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: #ff4d4f;
-    border: none;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-/* Emoji Container */
-.emoji-container {
+.modal-input-group {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 12px;
-}
-
-.emoji-btn {
-    background-color: #f0f2f5;
-    border: none;
-    padding: 8px;
+    position: relative;
+    
+  }
+  
+  .profile-img {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    
+  }
+  
+  .text-section {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .dropdown-toggle {
     cursor: pointer;
-}
+    display: flex;
+    align-items: center;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+ height: 200px;
+ width: 400px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 20px;
+  }
+  
+  .dropdown-menu div {
+    padding: 18px 22px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu div:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .visibility-option {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+  }
+  
 
-.emoji-icon {
-    font-size: 18px;
-}
-
-/* Modal Actions */
 .modal-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    margin-left: 560px;
 }
-
+.btn-post {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* When textarea has content */
+  .btn-post.active {
+    background-color: #007bff; /* Bootstrap blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
 .btn {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
+    margin-top: -30px;
 }
 
 .btn-cancel {
@@ -230,10 +298,7 @@
     color: #333;
 }
 
-.btn-post {
-    background-color: #0073b1;
-    color: #fff;
-}
+
 
 /* Post Feed */
 .post-feed {
@@ -309,6 +374,13 @@
     cursor: pointer;
 }
 
+
+.close-icon {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 /* Empty Feed */
 .empty-feed {
     text-align: center;
@@ -318,12 +390,67 @@
 .menu-btn{
     margin-left: 520px;
 }
-.dropdown-menu{
-    margin-left: -150px;
+.dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.3); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
-.dropdown-menu:hover{
-    color: red;
+
+.dropdown-menu {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 450px;
+  height: 300px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
 }
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dropdown-option {
+  
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-option:hover {
+  background-color: #e0e0e0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px){
     
@@ -345,7 +472,7 @@
    }
   
 }
-/* Footer Styles */
+
 
   /* Footer Styles */
 .footer {

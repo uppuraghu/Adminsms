@@ -19,9 +19,12 @@ const Navbar = () => {
         </Link>
 
         {/* Navigation Links (Shown on medium and larger screens) */}
-        <ul className="hidden md:flex space-x-6 text-lg font-semibold ml-270 list-none">
+        <ul className="hidden md:flex space-x-6 text-lg font-semibold ml-240 list-none">
           <li className="text-blue-600 hover:text-red-500 transition-colors duration-200">
             <Link to="/home">Home</Link>
+          </li>
+          <li className="text-blue-600 hover:text-red-500 transition-colors duration-200">
+            <Link to="/Mesg">Message</Link>
           </li>
           <li className="text-blue-600 hover:text-red-500 transition-colors duration-200">
             <Link to="/about">About</Link>

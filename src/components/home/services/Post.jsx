@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { FaRegSmile, FaEllipsisH, FaTimes } from "react-icons/fa";
-import Picker from "emoji-picker-react";
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // Firebase Auth
+import { FaTimes } from "react-icons/fa";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import prf from "../../../images/profileimg.png";
-import prf1 from "../../../images/profil.png";
+import prf1 from "../../../images/rag.png";
 import cal from "../../../images/cal.png";
 import art from "../../../images/art.png";
-import '.././../../App.css'
+import '.././../../App.css';
+import { FaChevronDown } from "react-icons/fa";
 
 const Post = () => {
     const [posts, setPosts] = useState([]);
+    const [visibility, setVisibility] = useState("Anyone");
+    const [showDropdown, setShowDropdown] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(null);
+    
     const [postData, setPostData] = useState({
-        username: "",
-        specialist: "",
+        username: "Raghu",
         description: "",
-        emoji: "",
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [user, setUser] = useState(null); // Track authenticated user
+    const [user, setUser] = useState(null);
 
-    // Firebase Auth: Check user authentication status
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             if (currentUser) {
-                // Optionally set username from Firebase user data
                 setPostData((prev) => ({
                     ...prev,
-                    username: currentUser.displayName || currentUser.email.split('@')[0],
+                    username: "Raghu", // Hardcoded
                 }));
             } else {
                 setError("Please log in to access this feature.");
@@ -42,10 +39,8 @@ const Post = () => {
         return () => unsubscribe();
     }, []);
 
-    // Fetch posts from backend (only if user is authenticated)
     useEffect(() => {
-        if (!user) return; // Skip if user is not authenticated
-
+        if (!user) return;
         const fetchPosts = async () => {
             try {
                 setLoading(true);
@@ -61,9 +56,8 @@ const Post = () => {
             }
         };
         fetchPosts();
-    }, [user]); // Re-fetch when user changes
+    }, [user]);
 
-    // Handle Post Submission (only if user is authenticated)
     const handlePost = async () => {
         if (!user) {
             setError("Please log in to create a post.");
@@ -71,11 +65,6 @@ const Post = () => {
         }
 
         setError(null);
-
-        if (!postData.username || !postData.specialist) {
-            setError("Please enter your name and select a specialist");
-            return;
-        }
 
         if (!postData.description) {
             setError("Please add a description");
@@ -87,9 +76,7 @@ const Post = () => {
 
             const formData = new FormData();
             formData.append('username', postData.username);
-            formData.append('specialist', postData.specialist);
             formData.append('description', postData.description);
-            formData.append('emoji', postData.emoji);
 
             const response = await fetch('http://localhost:5000/post/submit', {
                 method: 'POST',
@@ -102,10 +89,8 @@ const Post = () => {
             setPosts(prevPosts => [result.post, ...prevPosts]);
 
             setPostData({
-                username: user.displayName || user.email.split('@')[0], // Retain username
-                specialist: "",
+                username: "Raghu",
                 description: "",
-                emoji: "",
             });
             setModalOpen(false);
             setShowPopup(true);
@@ -113,39 +98,6 @@ const Post = () => {
         } catch (error) {
             console.error("Error adding post:", error);
             setError("Failed to create post. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const onEmojiClick = (emojiObject) => {
-        setPostData(prev => ({
-            ...prev,
-            emoji: (prev.emoji || "") + emojiObject.emoji
-        }));
-        setShowEmojiPicker(false);
-    };
-
-    const handleDelete = async (postId) => {
-        if (!user) {
-            setError("Please log in to delete a post.");
-            return;
-        }
-
-        if (!window.confirm("Are you sure you want to delete this post?")) return;
-
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:5000/post/${postId}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) throw new Error('Failed to delete post');
-
-            setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
-        } catch (error) {
-            console.error("Error deleting post:", error);
-            setError("Failed to delete post. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -159,24 +111,16 @@ const Post = () => {
         );
     }
 
+    const handleSelect = (option) => {
+        setVisibility(option);
+        setShowDropdown(false);
+      };
     return (
         <div className="container">
             <div className="content-wrapper">
-                {loading && (
-                    <div className="notification notification-loading">
-                        Processing...
-                    </div>
-                )}
-                {error && (
-                    <div className="notification notification-error">
-                        {error}
-                    </div>
-                )}
-                {showPopup && (
-                    <div className="notification notification-success">
-                        🎉 Post successfully created!
-                    </div>
-                )}
+                {loading && <div className="notification notification-loading">Processing...</div>}
+                {error && <div className="notification notification-error">{error}</div>}
+                {showPopup && <div className="notification notification-success">Post successfully created!</div>}
 
                 <div className="post-container">
                     <div className="post-header">
@@ -190,24 +134,15 @@ const Post = () => {
                         />
                     </div>
                     <div className="post-actions">
-                        <button
-                            className="action-btn"
-                            onClick={() => setModalOpen(true)}
-                        >
+                        <button className="action-btn" onClick={() => setModalOpen(true)}>
                             <img src={prf} alt="Media" className="action-icon" />
                             <span>Media</span>
                         </button>
-                        <button
-                            className="action-btn"
-                            onClick={() => setModalOpen(true)}
-                        >
+                        <button className="action-btn" onClick={() => setModalOpen(true)}>
                             <img src={cal} alt="Event" className="action-icon" />
                             <span>Event</span>
                         </button>
-                        <button
-                            className="action-btn"
-                            onClick={() => setModalOpen(true)}
-                        >
+                        <button className="action-btn" onClick={() => setModalOpen(true)}>
                             <img src={art} alt="Write Article" className="action-icon" />
                             <span>Write article</span>
                         </button>
@@ -217,54 +152,48 @@ const Post = () => {
                 {isModalOpen && (
                     <div className="modal-overlay">
                         <div className="modal-content">
-                            <button
-                                onClick={() => {
-                                    setModalOpen(false);
-                                    setShowEmojiPicker(false);
-                                }}
-                                className="close-btn"
-                            >
+                            <button onClick={() => setModalOpen(false)} className="close-btn">
                                 <FaTimes className="icon-close" />
                             </button>
 
-                            <h1 className="modal-title">Create a Post</h1>
+                            
 
                             <div className="modal-input-group">
-                                <img src={prf} alt="Profile" className="profile-img" />
-                                <input
-                                    type="text"
-                                    placeholder="Enter your Name"
-                                    value={postData.username}
-                                    onChange={(e) =>
-                                        setPostData((prev) => ({
-                                            ...prev,
-                                            username: e.target.value,
-                                        }))
-                                    }
-                                    className="text-input"
-                                />
-                            </div>
+      <img src={prf1} alt="Profile" className="profile-img" />
+      <div className="text-section">
+        <div    
+          className="text-display font-bold dropdown-toggle"
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          Raghu Ram<FaChevronDown size={14} style={{ marginLeft: 6 }} />
+        </div>
 
-                            <select
-                                value={postData.specialist}
-                                onChange={(e) =>
-                                    setPostData((prev) => ({
-                                        ...prev,
-                                        specialist: e.target.value,
-                                    }))
-                                }
-                                className="select-input"
-                            >
-                                <option value="">Select Specialist</option>
-                                <option value="Doctor">Doctor</option>
-                                <option value="Lawyer">Lawyer</option>
-                                <option value="Banking">Banking</option>
-                                <option value="Others">Others</option>
-                            </select>
+        {/* Dropdown content */}
+        {showDropdown && (
+  <div className="dropdown-overlay">
+    <div className="dropdown-menu">
+      <div className="dropdown-header">
+        <h1>Post Settings</h1>
+        <span className="close-icon" onClick={() => setShowDropdown(false)}>×</span>
+      </div>
+      <hr />
+      <p>Who can see your post?</p>
+      <div className="dropdown-option" onClick={() => handleSelect("Anyone")}>Anyone</div>
+      <div className="dropdown-option" onClick={() => handleSelect("Connections Only")}>Connections Only</div>
+    </div>
+  </div>
+)}
+
+
+
+        {/* Show selected option below name */}
+        <div className="visibility-option">{visibility}</div>
+      </div>
+    </div>
 
                             <textarea
-                                rows="4"
-                                placeholder="Add a description..."
+                                rows="8"
+                                placeholder="What do you want to talk about?"
                                 value={postData.description}
                                 onChange={(e) =>
                                     setPostData((prev) => ({
@@ -275,47 +204,16 @@ const Post = () => {
                                 className="textarea-input"
                             />
 
-                            <div className="emoji-container">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                    className="emoji-btn"
-                                >
-                                    <FaRegSmile className="emoji-icon" />
-                                </button>
-                                <input
-                                    type="text"
-                                    placeholder="Click to add emoji"
-                                    value={postData.emoji}
-                                    readOnly
-                                    className="emoji-input"
-                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                />
-                                {showEmojiPicker && (
-                                    <div className="emoji-picker">
-                                        <Picker onEmojiClick={onEmojiClick} />
-                                    </div>
-                                )}
-                            </div>
-
                             <div className="modal-actions">
-                                <button
-                                    onClick={() => {
-                                        setModalOpen(false);
-                                        setShowEmojiPicker(false);
-                                    }}
-                                    className="btn btn-cancel"
-                                    disabled={loading}
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    onClick={handlePost}
-                                    className="btn btn-post"
-                                    disabled={loading}
-                                >
-                                    {loading ? "Posting..." : "Post"}
-                                </button>
+                             
+                            <button
+  onClick={handlePost}
+  className={`btn btn-post ${postData.description.trim() ? "active" : ""}`}
+  disabled={loading}
+>
+  {loading ? "Posting..." : "Post"}
+</button>
+ 
                             </div>
                         </div>
                     </div>
@@ -329,30 +227,8 @@ const Post = () => {
                                     <img src={prf1} alt="Profile" className="profile-img" />
                                     <div className="post-info">
                                         <h3 className="post-username">{post.username}</h3>
-                                        <p className="post-specialist">{post.specialId}</p>
                                     </div>
-                                    <button
-                                        onClick={() =>
-                                            setShowDropdown(
-                                                showDropdown === post.id ? null : post.id
-                                            )
-                                        }
-                                        className="menu-btn"
-                                    >
-                                        <FaEllipsisH />
-                                    </button>
-                                    {showDropdown === post.id && (
-                                        <div className="dropdown-menu">
-                                            <button
-                                                onClick={() => handleDelete(post.id)}
-                                                className="dropdown-item"
-                                            >
-                                                Delete Post
-                                            </button>
-                                        </div>
-                                    )}
                                 </div>
-
                                 <p className="post-description">{post.description}</p>
                                 {post.imageUrl && (
                                     <img
@@ -361,8 +237,6 @@ const Post = () => {
                                         className="post-image"
                                     />
                                 )}
-                                {post.emoji && <p className="post-emoji">{post.emoji}</p>}
-
                                 <div className="post-footer">
                                     <span>{post.timestamp}</span>
                                 </div>
@@ -370,17 +244,12 @@ const Post = () => {
                         ))
                     ) : (
                         <div className="empty-feed">
-                            <p>
-                                {posts.length === 0
-                                    ? "No posts yet. Be the first to post!"
-                                    : "No posts found."}
-                            </p>
+                            <p>No posts yet. Be the first to post!</p>
                         </div>
                     )}
                 </div>
             </div>
         </div>
-
     );
 };
 
