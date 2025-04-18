@@ -1,125 +1,57 @@
 [
-  
   {
-    "id": "1743588636149",
-    "username": "Dr.nikhil",
-    "specialist": "Doctor",
-    "description": "nurelogist mmmmmmmmmmmmmmmmmmmmmmmmmmm",
+    "id": "1744944504010",
+    "username": "Raghu",
+    "specialist": "default",
+    "description": "Subject: Request to Open a New SBI Account\r\n\r\nHello Everyone,\r\nI would like to open a new savings account with the State Bank of India (SBI).\r\n\r\nHere are a few details about me:\r\n\r\nFull Name:UPPU Raghu\r\n\r\nContact Number: 123456789\r\n\r\nEmail ID:abc.gmail.com\r\n\r\nPreferred Branch: hyderabad\r\n\r\nType of Account: Savings Account\r\n\r\nID Proof: Aadhaar Card, PAN Card (available)\r\n\r\nPlease let me know the steps I need to follow, documents required, and if I can complete this process online or need to visit the branch. Looking forward to your assistance.\r\n\r\nThank you!\r\n",
     "emoji": "",
-    "specialId": "#doctor",
+    "specialId": "#default",
     "imageUrl": null,
-    "timestamp": "2/4/2025, 3:40:36 pm",
-    "createdAt": "2025-04-02T10:10:36.150Z"
-  },
-  
-  {
-    "id": "1743597407356",
-    "username": "raghu",
-    "specialist": "Lawyer",
-    "description": "sdc",
-    "emoji": "",
-    "specialId": "#lawyer",
-    "imageUrl": null,
-    "timestamp": "2/4/2025, 6:06:47 pm",
-    "createdAt": "2025-04-02T12:36:47.356Z"
+    "timestamp": "18/4/2025, 8:18:24 am",
+    "createdAt": "2025-04-18T02:48:24.056Z"
   },
   {
-    "id": "1743597854555",
-    "username": "raghu",
-    "specialist": "Lawyer",
-    "description": ";lko",
+    "id": "1744944618737",
+    "username": "Nikhl",
+    "specialist": "default",
+    "description": "Subject: Seeking Medical Advice for Health Issue\r\n\r\nHello Everyone,\r\nI’m experiencing some health issues and would like to seek medical advice.\r\n\r\nHere are some details about my condition:\r\n\r\nName:nikhil\r\n\r\nAge:28\r\n\r\nSymptoms: Fever, headache, fatigue, and occasional dizziness\r\n\r\nDuration: It’s been ongoing for the past 3 days\r\n\r\nMedical History: No chronic illnesses, no major allergies\r\n\r\nI haven't taken any medication yet, and I’d appreciate guidance on what steps to take next.\r\nDo I need to visit a hospital immediately, or can I manage this at home with some rest and medicines?\r\n\r\nThank you in advance for your help.",
     "emoji": "",
-    "specialId": "#lawyer",
+    "specialId": "#default",
     "imageUrl": null,
-    "timestamp": "2/4/2025, 6:14:14 pm",
-    "createdAt": "2025-04-02T12:44:14.555Z"
+    "timestamp": "18/4/2025, 8:20:18 am",
+    "createdAt": "2025-04-18T02:50:18.737Z"
   },
   {
-    "id": "1743669675151",
-    "username": ",khgfdfzghjk",
-    "specialist": "Lawyer",
-    "description": "mnnnnnnnnnnnnnnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasddddddddddddddddddddddddddddd",
+    "id": "1744944729057",
+    "username": "yash",
+    "specialist": "default",
+    "description": "Subject: Seeking Legal Advice Regarding a Property Dispute\r\n\r\nHello Everyone,\r\nI need some legal assistance regarding a property-related issue that has recently come up in my family.\r\n\r\nHere are a few details:\r\n\r\nName: yesh\r\n\r\nNature of the Issue: Dispute over ancestral property between siblings\r\n\r\nLocation of Property:hyderabad\r\n\r\nOwnership: The property is still under the name of our late father, and there is no registered will\r\n\r\nConcern: I want to understand how to proceed legally to claim my share fairly\r\n\r\nI would appreciate guidance on the necessary documents, the process involved, and if this can be resolved out of court or requires legal action.\r\n\r\nThank you in advance for your time and help.",
     "emoji": "",
-    "specialId": "#lawyer",
+    "specialId": "#default",
     "imageUrl": null,
-    "timestamp": "3/4/2025, 2:11:15 pm",
-    "createdAt": "2025-04-03T08:41:15.296Z"
+    "timestamp": "18/4/2025, 8:22:09 am",
+    "createdAt": "2025-04-18T02:52:09.109Z"
   },
   {
-    "id": "1743680640346",
-    "username": "rohit",
-    "specialist": "Lawyer",
-    "description": "mnbfdertdyfuiokl",
+    "id": "1744944801059",
+    "username": "pradyum",
+    "specialist": "default",
+    "description": "Subject: Request for Assistance\r\n\r\nHello Everyone,\r\nI hope you're doing well. I would like to request assistance related to a matter I'm currently dealing with.\r\n\r\nDetails:\r\n\r\nName: Pradyum\r\n\r\nTopic: [e.g., Opening a bank account / Health issue / Legal dispute / Technical support / Job guidance]\r\n\r\nBrief Description: [Provide a short explanation of the issue or service you're looking for]\r\n\r\nAdditional Info: [Any documents, symptoms, background, or queries you want to mention]\r\n\r\nI would really appreciate guidance on what steps to follow and whom to contact for further help.\r\n\r\nThank you in advance!",
     "emoji": "",
-    "specialId": "#lawyer",
+    "specialId": "#default",
     "imageUrl": null,
-    "timestamp": "3/4/2025, 5:14:00 pm",
-    "createdAt": "2025-04-03T11:44:00.492Z"
+    "timestamp": "18/4/2025, 8:23:21 am",
+    "createdAt": "2025-04-18T02:53:21.059Z"
   },
   {
-    "id": "1743680812597",
-    "username": "prasum",
-    "specialist": "Banking",
-    "description": "sbi hdfc mangr",
+    "id": "1744944900924",
+    "username": "Rahul",
+    "specialist": "default",
+    "description": "Subject: Request for Assistance\r\n\r\nHello Everyone,\r\nI hope you're doing well. I would like to request assistance related to a matter I'm currently dealing with.\r\n\r\nDetails:\r\n\r\nName: RAHUL\r\n\r\nTopic: Health issue \r\n\r\nBrief Description: [Provide a short explanation of the issue or service you're looking for]\r\n\r\nAdditional Info: [Any documents, symptoms, background, or queries you want to mention]\r\n\r\nI would really appreciate guidance on what steps to follow and whom to contact for further help.\r\n\r\nThank you in advance!",
     "emoji": "",
-    "specialId": "#banking",
+    "specialId": "#default",
     "imageUrl": null,
-    "timestamp": "3/4/2025, 5:16:52 pm",
-    "createdAt": "2025-04-03T11:46:52.597Z"
-  },
-  {
-    "id": "1743757385466",
-    "username": "raju",
-    "specialist": "Lawyer",
-    "description": "crme",
-    "emoji": "",
-    "specialId": "#lawyer",
-    "imageUrl": null,
-    "timestamp": "4/4/2025, 2:33:05 pm",
-    "createdAt": "2025-04-04T09:03:05.630Z"
-  },
-  {
-    "id": "1744007038360",
-    "username": "raghu",
-    "specialist": "Lawyer",
-    "description": "lkuytrsea",
-    "emoji": "",
-    "specialId": "#lawyer",
-    "imageUrl": null,
-    "timestamp": "7/4/2025, 11:53:58 am",
-    "createdAt": "2025-04-07T06:23:58.456Z"
-  },
-  {
-    "id": "1744090738820",
-    "username": "raghu",
-    "specialist": "Lawyer",
-    "description": "hello ",
-    "emoji": "",
-    "specialId": "#lawyer",
-    "imageUrl": null,
-    "timestamp": "8/4/2025, 11:08:58 am",
-    "createdAt": "2025-04-08T05:38:58.999Z"
-  },
-  {
-    "id": "1744090830077",
-    "username": "raghu",
-    "specialist": "Banking",
-    "description": "hello good moring",
-    "emoji": "",
-    "specialId": "#banking",
-    "imageUrl": null,
-    "timestamp": "8/4/2025, 11:10:30 am",
-    "createdAt": "2025-04-08T05:40:30.077Z"
-  },
-  {
-    "id": "1744103382759",
-    "username": "xyz",
-    "specialist": "Doctor",
-    "description": "kijuhb",
-    "emoji": "",
-    "specialId": "#doctor",
-    "imageUrl": null,
-    "timestamp": "8/4/2025, 2:39:42 pm",
-    "createdAt": "2025-04-08T09:09:42.877Z"
+    "timestamp": "18/4/2025, 8:25:00 am",
+    "createdAt": "2025-04-18T02:55:00.924Z"
   }
 ]

@@ -83,7 +83,7 @@ const Register = () => {
             Create Account
           </button>
 
-          <Link className="text-zinc-700" to="/login">
+          <Link className="text-zinc-700" to="/">
             Login
           </Link>
         </form>

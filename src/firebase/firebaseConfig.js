@@ -31,7 +31,7 @@ setPersistence(auth, browserSessionPersistence)
     console.error(" Firebase Persistence Error:", error);
   });
 
-export { auth, db,storage };
+export { auth, db, storage };
 
 /*
 

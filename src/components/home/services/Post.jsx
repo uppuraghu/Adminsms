@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaChevronDown } from "react-icons/fa";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { toast } from "react-toastify";
+
 import prf from "../../../images/profileimg.png";
 import prf1 from "../../../images/rag.png";
 import cal from "../../../images/cal.png";
 import art from "../../../images/art.png";
-import '.././../../App.css';
-import { FaChevronDown } from "react-icons/fa";
+import ".././../../App.css";
 
 const Post = () => {
     const [posts, setPosts] = useState([]);
     const [visibility, setVisibility] = useState("Anyone");
     const [showDropdown, setShowDropdown] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
-    
     const [postData, setPostData] = useState({
         username: "Raghu",
         description: "",
@@ -22,6 +21,8 @@ const Post = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
+    const [connectInputs, setConnectInputs] = useState({});
+    const [activeConnectPostId, setActiveConnectPostId] = useState(null);
 
     useEffect(() => {
         const auth = getAuth();
@@ -30,7 +31,7 @@ const Post = () => {
             if (currentUser) {
                 setPostData((prev) => ({
                     ...prev,
-                    username: "Raghu", // Hardcoded
+                    username: "Raghu", // Hardcoded username
                 }));
             } else {
                 setError("Please log in to access this feature.");
@@ -44,7 +45,7 @@ const Post = () => {
         const fetchPosts = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:5000/posts');
+                const response = await fetch('http://localhost:3000/posts');
                 if (!response.ok) throw new Error('Failed to fetch posts');
                 const postsData = await response.json();
                 setPosts(postsData);
@@ -67,7 +68,7 @@ const Post = () => {
         setError(null);
 
         if (!postData.description) {
-            setError("Please add a description");
+            toast.error("Please add a description");
             return;
         }
 
@@ -76,9 +77,10 @@ const Post = () => {
 
             const formData = new FormData();
             formData.append('username', postData.username);
+            formData.append('specialist', 'default');
             formData.append('description', postData.description);
 
-            const response = await fetch('http://localhost:5000/post/submit', {
+            const response = await fetch('http://localhost:3000/post/submit', {
                 method: 'POST',
                 body: formData,
             });
@@ -93,13 +95,48 @@ const Post = () => {
                 description: "",
             });
             setModalOpen(false);
-            setShowPopup(true);
-            setTimeout(() => setShowPopup(false), 3000);
+
+            toast.success("Post successfully created!");
         } catch (error) {
             console.error("Error adding post:", error);
-            setError("Failed to create post. Please try again.");
+            toast.error("Failed to create post. Please try again.");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSelect = (option) => {
+        setVisibility(option);
+        setShowDropdown(false);
+    };
+
+    const toggleConnect = (postId) => {
+        if (activeConnectPostId === postId) {
+            setActiveConnectPostId(null); // Close if already open
+        } else {
+            setActiveConnectPostId(postId); // Open for clicked post
+        }
+    };
+
+    const handleConnectChange = (postId, value) => {
+        setConnectInputs((prev) => ({
+            ...prev,
+            [postId]: value,
+        }));
+    };
+
+    const handleConnectSubmit = (postId) => {
+        const message = connectInputs[postId];
+        if (message && message.trim()) {
+            console.log(`Connection request to post ${postId}:`, message);
+            toast.success("Connection message sent!");
+            setConnectInputs((prev) => ({
+                ...prev,
+                [postId]: "",
+            }));
+            setActiveConnectPostId(null);
+        } else {
+            toast.error("Please write a message before sending.");
         }
     };
 
@@ -111,17 +148,13 @@ const Post = () => {
         );
     }
 
-    const handleSelect = (option) => {
-        setVisibility(option);
-        setShowDropdown(false);
-      };
     return (
         <div className="container">
             <div className="content-wrapper">
                 {loading && <div className="notification notification-loading">Processing...</div>}
                 {error && <div className="notification notification-error">{error}</div>}
-                {showPopup && <div className="notification notification-success">Post successfully created!</div>}
 
+                {/* Post Input Section */}
                 <div className="post-container">
                     <div className="post-header">
                         <img src={prf1} alt="Profile" className="profile-img" />
@@ -149,6 +182,7 @@ const Post = () => {
                     </div>
                 </div>
 
+                {/* Modal */}
                 {isModalOpen && (
                     <div className="modal-overlay">
                         <div className="modal-content">
@@ -156,40 +190,34 @@ const Post = () => {
                                 <FaTimes className="icon-close" />
                             </button>
 
-                            
-
                             <div className="modal-input-group">
-      <img src={prf1} alt="Profile" className="profile-img" />
-      <div className="text-section">
-        <div    
-          className="text-display font-bold dropdown-toggle"
-          onClick={() => setShowDropdown(!showDropdown)}
-        >
-          Raghu Ram<FaChevronDown size={14} style={{ marginLeft: 6 }} />
-        </div>
+                                <img src={prf1} alt="Profile" className="profile-img" />
+                                <div className="text-section">
+                                    <div
+                                        className="text-display font-bold dropdown-toggle"
+                                        onClick={() => setShowDropdown(!showDropdown)}
+                                    >
+                                        Raghu Ram <FaChevronDown size={14} style={{ marginLeft: 6 }} />
+                                    </div>
 
-        {/* Dropdown content */}
-        {showDropdown && (
-  <div className="dropdown-overlay">
-    <div className="dropdown-menu">
-      <div className="dropdown-header">
-        <h1>Post Settings</h1>
-        <span className="close-icon" onClick={() => setShowDropdown(false)}>×</span>
-      </div>
-      <hr />
-      <p>Who can see your post?</p>
-      <div className="dropdown-option" onClick={() => handleSelect("Anyone")}>Anyone</div>
-      <div className="dropdown-option" onClick={() => handleSelect("Connections Only")}>Connections Only</div>
-    </div>
-  </div>
-)}
+                                    {showDropdown && (
+                                        <div className="dropdown-overlay">
+                                            <div className="dropdown-menu">
+                                                <div className="dropdown-header">
+                                                    <h1>Post Settings</h1>
+                                                    <span className="close-icon" onClick={() => setShowDropdown(false)}>×</span>
+                                                </div>
+                                                <hr />
+                                                <p>Who can see your post?</p>
+                                                <div className="dropdown-option" onClick={() => handleSelect("Anyone")}>Anyone</div>
+                                                <div className="dropdown-option" onClick={() => handleSelect("Connections Only")}>Connections Only</div>
+                                            </div>
+                                        </div>
+                                    )}
 
-
-
-        {/* Show selected option below name */}
-        <div className="visibility-option">{visibility}</div>
-      </div>
-    </div>
+                                    <div className="visibility-option">{visibility}</div>
+                                </div>
+                            </div>
 
                             <textarea
                                 rows="8"
@@ -205,20 +233,19 @@ const Post = () => {
                             />
 
                             <div className="modal-actions">
-                             
-                            <button
-  onClick={handlePost}
-  className={`btn btn-post ${postData.description.trim() ? "active" : ""}`}
-  disabled={loading}
->
-  {loading ? "Posting..." : "Post"}
-</button>
- 
+                                <button
+                                    onClick={handlePost}
+                                    className={`btn btn-post ${postData.description.trim() ? "active" : ""}`}
+                                    disabled={loading}
+                                >
+                                    {loading ? "Posting..." : "Post"}
+                                </button>
                             </div>
                         </div>
                     </div>
                 )}
 
+                {/* Posts Feed */}
                 <div className="post-feed">
                     {posts.length > 0 ? (
                         posts.map((post) => (
@@ -232,13 +259,41 @@ const Post = () => {
                                 <p className="post-description">{post.description}</p>
                                 {post.imageUrl && (
                                     <img
-                                        src={`http://localhost:5000${post.imageUrl}`}
+                                        src={`http://localhost:3000${post.imageUrl}`}
                                         alt="Post content"
                                         className="post-image"
                                     />
                                 )}
                                 <div className="post-footer">
                                     <span>{post.timestamp}</span>
+                                </div>
+
+                                {/* Connect Section */}
+                                <div className="connect-section">
+                                    <button
+                                        className="btn-connect"
+                                        onClick={() => toggleConnect(post.id)}
+                                    >
+                                        {activeConnectPostId === post.id ? "Cancel" : "Connect"}
+                                    </button>
+
+                                    {activeConnectPostId === post.id && (
+                                        <div className="connect-input-box">
+                                            <textarea
+                                                rows="3"
+                                                placeholder="Write a message..."
+                                                value={connectInputs[post.id] || ""}
+                                                onChange={(e) => handleConnectChange(post.id, e.target.value)}
+                                                className="textarea-connect"
+                                            />
+                                            <button
+                                                className="btn btn-submit-connect"
+                                                onClick={() => handleConnectSubmit(post.id)}
+                                            >
+                                                Send
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))

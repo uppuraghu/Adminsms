@@ -575,4 +575,45 @@
       font-size: 14px;
     }
   }
-  
+  .connect-section {
+    margin-top: 10px;
+}
+
+.btn-connect {
+    padding: 6px 12px;
+    background-color: #04afff;
+    color: white;
+    border: none;
+  font-size: small;
+    border-radius: 5px;
+    cursor: pointer;
+   
+  margin-left: 10px;
+}
+
+
+.connect-input-box {
+    margin-top: 10px;
+    
+}
+
+.textarea-connect {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    margin-bottom: 5px;
+}
+
+.btn-submit-connect {
+    background-color: #fd2222;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left:85%;
+    font-size: small;
+   
+}
